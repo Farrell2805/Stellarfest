@@ -15,14 +15,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.User;
+import util.PageNavigator;
 
 public class RegisterView {
 	private UserController userController;
 	private Stage stage;
 	
-	public RegisterView(UserController userController, Stage stage) {
+	public RegisterView(UserController userController) {
 		this.userController = userController;
-		this.stage = stage;
 	}
 	
 	public Scene getRegisterScene() {
@@ -69,8 +69,7 @@ public class RegisterView {
 		Label loginLbl = new Label("Already have an account? ");
 		Button loginBtn = new Button("Login Here!");
 		loginBtn.setOnAction(e->{
-			LoginView loginView = new LoginView(userController, stage);
-			stage.setScene(loginView.getLoginScene());
+			PageNavigator.showLoginView();
 		});
 		
 		GridPane gp = new GridPane();

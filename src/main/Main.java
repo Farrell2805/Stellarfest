@@ -1,8 +1,10 @@
 package main;
 
+import controller.AdminController;
 import controller.UserController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import util.PageNavigator;
 import view.RegisterView;
 
 public class Main extends Application{
@@ -14,9 +16,10 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		UserController userController = new UserController();
-		RegisterView registerView = new RegisterView(userController, primaryStage);
+		AdminController adminController = new AdminController();
 		
-		primaryStage.setScene(registerView.getRegisterScene());
+		PageNavigator.init(primaryStage);
+		PageNavigator.showRegisView();
 		primaryStage.setWidth(800);
 		primaryStage.setHeight(600);
 		primaryStage.show();

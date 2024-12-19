@@ -1,5 +1,6 @@
 package view;
 
+import controller.AdminController;
 import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,14 +15,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.User;
+import util.PageNavigator;
+import util.UserSession;
 
 public class LoginView {
 	private UserController userController;
 	private Stage stage;
+	private AdminController adminController;
 	
-	public LoginView(UserController userController, Stage stage) {
+	public LoginView(UserController userController) {
 		this.userController = userController;
-		this.stage = stage;
 	}
 	
 	public Scene getLoginScene() {
@@ -45,7 +48,7 @@ public class LoginView {
 			String password = passTF.getText();	
 			
 			User user = userController.login(email, password);
-			
+			UserSession.setCurrentUser(user);
 			if(user == null) {
 				msgLabel.setText("Email and password wrong!");
 				msgLabel.setStyle("-fx-text-fill : red");
@@ -55,6 +58,25 @@ public class LoginView {
 			msgLabel.setText("Login Success!");
 			msgLabel.setStyle("-fx-text-fill : green");
 			
+			String role = user.getUserRole();
+			
+			switch (role) {
+			case "Admin":
+				PageNavigator.showAdminHomeView();
+				break;
+			case "Event Organizer":
+//				stage.setScene(EventOrganizerHomeView);
+				break;
+			case "Guest":
+//				stage.setScene(GuestHomeView);
+				break;
+			case "Vendor":
+//				stage.setScene(VendorHomeView);
+				break;
+			default:
+				break;
+			}
+			
 			
 			
 		});
@@ -62,8 +84,7 @@ public class LoginView {
 		Label regisLabel = new Label("Dont have an account?");
 		Button regisBtn = new Button("Register Here!");
 		regisBtn.setOnAction(e->{
-			RegisterView registerView = new RegisterView(userController,stage);
-			stage.setScene(registerView.getRegisterScene());
+			PageNavigator.showRegisView();
 		});
 		
 		GridPane gp = new GridPane();
