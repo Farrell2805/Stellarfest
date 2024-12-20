@@ -15,9 +15,6 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		UserController userController = new UserController();
-		AdminController adminController = new AdminController();
-		
 		PageNavigator.init(primaryStage);
 		PageNavigator.showRegisView();
 		primaryStage.setWidth(800);

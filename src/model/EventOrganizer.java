@@ -141,5 +141,34 @@ public class EventOrganizer extends User{
 		return false;
 	}
 	
+	public List<Event> viewOrganizedEvents(String organizerId){
+		String query = "SELECT * FROM events WHERE organizerId = ?";
+		List<Event> organizedEvents = new ArrayList<>();
+		
+		PreparedStatement ps = connect.prepareStatement(query);
+		try {
+			ps.setString(1, organizerId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Event event = new Event();
+				event.setEventDate(rs.getString("eventDate"));
+				event.setEventDescription(rs.getString("eventDescription"));
+				event.setEventId(rs.getString("eventId"));
+				event.setEventLocation(rs.getString("eventLocation"));
+				event.setEventName(rs.getString("eventName"));
+				event.setOrganizerId(rs.getString("organizerId"));
+				
+				organizedEvents.add(event);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return organizedEvents;
+		
+		
+	}
+	
 	
 }
